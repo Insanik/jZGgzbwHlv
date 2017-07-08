@@ -13,7 +13,6 @@ wlcMessage = false;
 var userid = localStorage.getItem('arena-user-id');
 var usertoken = localStorage.getItem('arena-user-token');
 var canStart = false;
-var language = document.querySelector("#top-bar-language").classList.value;
 
 var username = document.querySelector("#top-bar-profile-username").textContent;
 console.log("%c" + "CSGOArena Bot - Made by Insanic", "color: red; font-weight: bold; font-size: 32px;");
@@ -151,6 +150,7 @@ function randomPhrase() {
 }
 
 function checkStatus(){
+	var language = document.querySelector("#top-bar-language").classList.value;
 	if(language.includes("flag-us")){
 		status = giveawayTitle.textContent.includes("Win");
 	} else if (language.includes("flag-sv")) {
