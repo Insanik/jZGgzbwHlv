@@ -1,4 +1,4 @@
-var botTab = document.createElement("a");
+﻿var botTab = document.createElement("a");
 var dropdown = document.querySelector("#top-bar-profile-user > div.dropdown");
 var logOut = document.querySelector("#top-bar-profile-user > div.dropdown > div")
 dropdown.insertBefore(botTab, logOut);
@@ -13,6 +13,7 @@ wlcMessage = false;
 var userid = localStorage.getItem('arena-user-id');
 var usertoken = localStorage.getItem('arena-user-token');
 var canStart = false;
+var language = document.querySelector("#top-bar-language").classList.value;
 
 var username = document.querySelector("#top-bar-profile-username").textContent;
 console.log("%c" + "CSGOArena Bot - Made by Insanic", "color: red; font-weight: bold; font-size: 32px;");
@@ -149,7 +150,17 @@ function randomPhrase() {
 	}
 }
 
-status = giveawayTitle.textContent.includes("Vinn");
+function checkStatus(){
+	if(language.includes("flag-us")){
+		status = giveawayTitle.textContent.includes("Win");
+	} else if (language.includes("flag-sv")) {
+		status = giveawayTitle.textContent.includes("Vinn");
+	} else {
+		console.log("Something went wrong...")
+	}
+}
+
+checkStatus()
 
 function settings(formData, code) {
     data = formData;
@@ -337,7 +348,7 @@ function uptime() {
 }
 
 function checker() {
-    status = giveawayTitle.textContent.includes("Vinn");
+    checkStatus()
     if (status == "true" && !intervalRunning) {
 		saveLog("Giveaway has started");
         soundAlertStart.play();
