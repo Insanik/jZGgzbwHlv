@@ -1,6 +1,8 @@
 {
   "status": {
     "status": true,
-    "admin": false
+    "admin": false,
+    "reason": "We are currently encountering bugs. Please be patient",
+    "message": "This is a test message!!"
   }
 }
