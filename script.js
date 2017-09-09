@@ -160,7 +160,7 @@ function randomPhrase() {
 	}
 }
 
-status = giveawayTitle.textContent.includes("Vinn");
+f
  
 function settings(formData, code) {
     data = formData;
@@ -348,7 +348,13 @@ function uptime() {
 }
  
 function checker() {
-    status = giveawayTitle.textContent.includes("Vinn");
+    if(giveawayTitle.textContent.includes("Vinn")) {
+		status = true;
+	} else if(giveawayTitle.textContent.includes("Win")) {
+		status = true;
+	} else {
+		status = false;
+	}
     if (status == "true" && !intervalRunning) {
 		saveLog("Giveaway has started");
         soundAlertStart.play();
