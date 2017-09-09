@@ -5,12 +5,15 @@ dropdown.insertBefore(botTab, logOut);
 botTab.className = "dropdown-entry profile";
 botTab.innerHTML = "Giveaway Bot";
 botTab.onclick = function() { botPage() };
+document.querySelector("#top-bar-admin-message").innerHTML = "Insanik's CSGOArena Bot";
 cg = 0;
 botRunning = false;
 var logContent = "";
 wlcMessage = false;
 var userid = localStorage.getItem('arena-user-id');
 var usertoken = localStorage.getItem('arena-user-token');
+var language = localStorage.getItem('arena-language');
+var lang;
 var canStart = false;
 
 var profUsername = document.querySelector("#top-bar-profile-username").textContent;
@@ -160,7 +163,13 @@ function randomPhrase() {
 	}
 }
 
-f
+if(language == "EN") {
+	lang = "Win";
+} else {
+	lang = "Vinn"
+}
+
+status = giveawayTitle.textContent.includes(lang);
  
 function settings(formData, code) {
     data = formData;
@@ -348,13 +357,7 @@ function uptime() {
 }
  
 function checker() {
-    if(giveawayTitle.textContent.includes("Vinn")) {
-		status = true;
-	} else if(giveawayTitle.textContent.includes("Win")) {
-		status = true;
-	} else {
-		status = false;
-	}
+    status = giveawayTitle.textContent.includes(lang);
     if (status == "true" && !intervalRunning) {
 		saveLog("Giveaway has started");
         soundAlertStart.play();
