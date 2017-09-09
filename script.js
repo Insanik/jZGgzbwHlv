@@ -5,7 +5,6 @@ dropdown.insertBefore(botTab, logOut);
 botTab.className = "dropdown-entry profile";
 botTab.innerHTML = "Giveaway Bot";
 botTab.onclick = function() { botPage() };
-document.querySelector("#top-bar-admin-message").innerHTML = "Insanik's CSGOArena Bot";
 cg = 0;
 botRunning = false;
 var logContent = "";
